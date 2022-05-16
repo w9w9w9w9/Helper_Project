@@ -13,5 +13,9 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "requst": "^0.0.1-security"
   }
 }
