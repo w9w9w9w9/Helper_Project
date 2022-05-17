@@ -14,18 +14,24 @@ queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent(
 queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent(currentday); 
 queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent(currentday); 
 
-//parsing and get data 
+//data of covid-19 polices
+var policies = {
+    socialDistancing : "NO-LIMIT",
+    mask : "INSIDE-ONLY",
+    privateGathering : "NO-LIMIT",
+    operationHours : "NO-LIMIT"
+}
 
 function geturl(){
     var covidurl = url + queryParams;
     return covidurl
 }
 
-function getday(){
-    return currentday
+function getpolicies(){
+   return policies
 }
 
 module.exports = {
     geturl,
-    getday,
+    getpolicies,
 };
