@@ -9,10 +9,10 @@ var currentday = currentdate.getFullYear() + (('0' + (currentdate.getMonth() + 1
 //get data from api
 var url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson';
 var queryParams = '?' + encodeURIComponent('serviceKey') + '=z1Wb1B30STzrsT5oPiC%2FIAbzWNPUKrLUV5snIA%2Bt7YqQ9BTaeAwqcx7JPxVB8zUzwr8Bh%2BVOVdIyw0%2FepTl7Jw%3D%3D'; /* Service Key*/
-queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /* */
-queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /* */
-queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent(currentday); /* */
-queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent(currentday); /* */
+queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); 
+queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); 
+queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURIComponent(currentday); 
+queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent(currentday); 
 
 //parsing and get data 
 request({
