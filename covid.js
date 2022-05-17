@@ -4,7 +4,7 @@ var cheerio = require("cheerio");
 
 //get current date for Covid-19
 var currentdate = new Date();
-var currentday = currentdate.getFullYear() + (('0' + (currentdate.getMonth() + 1)).slice(-2)) + (('0' + currentdate.getDate()).slice(-2));
+var currentday = currentdate.getFullYear() + (('0' + (currentdate.getMonth() + 1)).slice(-2)) + (('0' + (currentdate.getDate() -1)).slice(-2));
 
 //get data from api
 var url = 'http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson';
@@ -15,16 +15,17 @@ queryParams += '&' + encodeURIComponent('startCreateDt') + '=' + encodeURICompon
 queryParams += '&' + encodeURIComponent('endCreateDt') + '=' + encodeURIComponent(currentday); 
 
 //parsing and get data 
-request({
-    url: url + queryParams,
-    method: 'GET'
-}, function (error, response, body) {
-    var $ = cheerio.load(body);
-    $('item').each(function(index,element){
-        var  CumulativeConfirmationRate= $(element).children('accDefRate').text();
-        var confirmedCase = $(element).children('decideCnt').text();
-        var deathCount = $(element).children('deathCnt').text();
-        var CumulativeExamineRate = $(element).children('accExamCn').text();
-    })
 
-});
+function geturl(){
+    var covidurl = url + queryParams;
+    return covidurl
+}
+
+function getday(){
+    return currentday
+}
+
+module.exports = {
+    geturl,
+    getday,
+};

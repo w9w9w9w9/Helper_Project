@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
+    "request": "^2.88.2",
     "requst": "^0.0.1-security"
   }
 }
