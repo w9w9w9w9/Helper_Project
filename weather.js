@@ -18,7 +18,33 @@ export async function getWeather(city) {
     //console.log(jsonData);
 }
 
-// add convertTime function here - for sunrise, sunset
+export async function convertTime(unix_timestamp, offset){
+    // convert number to a 2-digit string
+    const twoDigits = (val) => {
+        return ('0' + val).slice(-2);
+    };
+    let date = new Date((unix_timestamp + offset)* 1000);
+    // Hours part from the timestamp
+    let hours = date.getUTCHours();
+    // Minutes part from the timestamp
+    let minutes = twoDigits(date.getUTCMinutes());
+    // Seconds part from the timestamp
+    let seconds = twoDigits(date.getUTCSeconds());
+    
+    // Will display time in 10:30:23 format
+    let formattedTime = hours + ':' + minutes + ':' + seconds;
+
+    //testing
+    if(hours > 12) {
+        formattedTime = twoDigits(hours-12) + ':' + minutes + ':' + seconds + " PM";
+    }
+    else {
+        formattedTime = hours + ':' + minutes + ':' + seconds + " AM";
+    }
+    //
+
+    return formattedTime;
+}
 
 // 각자의 정보를 제공하는 함수들
 export async function current_temp() {
@@ -72,7 +98,20 @@ export async function clouds() {
     }
     console.log(phrase);
 }
-
+export async function sunrise() {
+    const sunrise = await convertTime(jsonData.sys.sunrise, jsonData.timezone);
+    const place = jsonData.name;
+    const country = jsonData.sys.country;
+    let phrase = `The sun rises at ${sunrise} in ${place}(${country})`;
+    console.log(phrase);
+}
+export async function sunset() {
+    const sunset = await convertTime(jsonData.sys.sunset, jsonData.timezone);
+    const place = jsonData.name;
+    const country = jsonData.sys.country;
+    let phrase = `The sun sets at ${sunset} in ${place}(${country})`;
+    console.log(phrase);
+}
 export async function change_location(new_city) {
     getWeather(new_city);
 }
