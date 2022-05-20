@@ -1,4 +1,6 @@
 #!/opt/homebrew/bin/node
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const translate = require("./translate")
 import * as weather from './weather.js';
 import readline from 'readline';

@@ -15,7 +15,6 @@ export async function getWeather(city) {
     let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units="+units+"&appid="+apiKey;
 
     jsonData = await getJson(url);
-    //console.log(jsonData);
 }
 
 export async function convertTime(unix_timestamp, offset){
@@ -34,14 +33,12 @@ export async function convertTime(unix_timestamp, offset){
     // Will display time in 10:30:23 format
     let formattedTime = hours + ':' + minutes + ':' + seconds;
 
-    //testing
     if(hours > 12) {
         formattedTime = twoDigits(hours-12) + ':' + minutes + ':' + seconds + " PM";
     }
     else {
         formattedTime = hours + ':' + minutes + ':' + seconds + " AM";
     }
-    //
 
     return formattedTime;
 }
