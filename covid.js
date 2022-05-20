@@ -30,7 +30,6 @@ function geturl(){
 function getpolicies(){
    return policies
 }
-
 module.exports = {
     geturl,
     getpolicies,
