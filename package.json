@@ -1,6 +1,6 @@
 {
   "name": "helper_project",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "SKKU Open-Source Software Project",
   "main": "main.js",
   "scripts": {
@@ -13,5 +13,9 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^28.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "request": "^2.88.2"
   }
 }
