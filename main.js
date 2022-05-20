@@ -1,8 +1,7 @@
 #!/opt/homebrew/bin/node
 const translate = require("./translate")
-const weather = require("./weather.js") //import * as weather from './weather.js';
+const weather = require("./weather.js")
 const readline = require("readline")
-//import readline from 'readline';
 //const ~
 
 if(process.argv.length <= 2){
@@ -35,7 +34,7 @@ switch(command){
         process.exit(1);
 }
 
-// Function for commands to go to
+// Function for weather commands to go to
 async function weather_commands(_command) {
     switch(_command) {
         case "current_temp":
