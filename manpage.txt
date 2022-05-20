@@ -1,12 +1,17 @@
+
+                Helper Manual Page
+
 NAME  
 	Helper – help user to get information regarding translation, weather, and covid-19
 
 SYNOPSIS
-    helper [-category] [option] [...]
+    helper [-category] [option..] [...]
 DESCRIPTION
 	Show information on the terminal
 
     The categories and options are as follows:
+
+    man: Provied manual for helper 
 
 	-cv: Provide information about covid -19
 

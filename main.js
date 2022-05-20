@@ -25,7 +25,14 @@ switch(command){
     //case ~ 
 
     case "man":
-        //manual page
+        const fs = require("fs");
+        fs.readFile("./manpage.txt", "utf8", (e, d) => {
+            if(e){
+                console.log(e);
+            } else{
+                console.log(d);
+            }
+        })
         break;
     default:
         console.log("Worng command");
