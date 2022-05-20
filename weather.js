@@ -1,23 +1,102 @@
-import fetch from 'node-fetch';
+const axios = require('axios')
 // Fetch Weather from API
 
-export let jsonData;
+let apiKey = "dcd483fc5dd0421fddbc501e1661a8cd";
+let units = "metric";
+let city = "seoul";
+let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units="+units+"&appid="+apiKey;
 
-export async function getJson(url) {
-    let response = await fetch(url);
-    let data = await response.json();
-    return data;
+
+// 각자의 정보를 제공하는 함수들
+async function current_temp() {
+    await axios.get(url)
+            .then(responseData => {
+                let jsonData = responseData.data;
+                const cur_t = jsonData.main.temp;
+                const place = jsonData.name;
+                const country = jsonData.sys.country;
+                let phrase = `The current temperature in ${place}(${country}) is ${cur_t} degrees celcius.`;
+                console.log(phrase);
+            })
+            .catch(error => {
+                if(error.response)
+                console.log("Check the name of the city!");
+            });
 }
 
-export async function getWeather(city) {
-    let apiKey = "dcd483fc5dd0421fddbc501e1661a8cd";
-    let units = "metric";
-    let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units="+units+"&appid="+apiKey;
-
-    jsonData = await getJson(url);
+async function min_temp() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const min_t = jsonData.main.temp_min;
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase = `The minimum temperature at the moment in ${place}(${country}) is ${min_t} degrees celcius.`;
+        console.log(phrase);
+    })
+    .catch(error => {
+        if(error.response)
+        console.log("Check the name of the city!");
+    });
 }
-
-export async function convertTime(unix_timestamp, offset){
+async function max_temp() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const max_t = jsonData.main.temp_max;
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase = `The maximum temperature at the moment in ${place}(${country}) is ${max_t} degrees celcius.`;
+        console.log(phrase);
+    })
+    .catch(error => { if(error.response) console.log("Check the name of the city!");});
+}
+async function humidity() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const humidity = jsonData.main.humidity;
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase;
+        if(humidity > 70) {
+            phrase = `The humidity in ${place}(${country}) is ${humidity}%! It may be an unpleasant day...`;
+        }
+        else {
+            phrase = `The humidity in ${place}(${country}) is ${humidity}%. Have a pleasant day!`;
+        }
+        console.log(phrase);
+    })
+    .catch(error => {
+        if(error.response)
+        console.log("Check the name of the city!");
+    });
+}
+async function clouds() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const cloudy = jsonData.clouds.all;
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase;
+        if(cloudy < 50) {
+            phrase = `The sky is clear with ${cloudy}% cloudiness in ${place}(${country}).`;
+        }
+        else if(cloudy < 80) {
+            phrase = `It is a bit cloudy with ${cloudy}% cloudiness in ${place}(${country}).`;
+        }
+        else { // cloudy >= 80
+            phrase = `It is cloudy with ${cloudy}% cloudiness in ${place}(${country}).`;
+        }
+        console.log(phrase);
+    })
+    .catch(error => {
+        if(error.response)
+        console.log("Check the name of the city!");
+    });
+}
+function convertTime(unix_timestamp, offset){
     // convert number to a 2-digit string
     const twoDigits = (val) => {
         return ('0' + val).slice(-2);
@@ -30,93 +109,105 @@ export async function convertTime(unix_timestamp, offset){
     // Seconds part from the timestamp
     let seconds = twoDigits(date.getUTCSeconds());
     
-    // Will display time in 10:30:23 format
-    let formattedTime = hours + ':' + minutes + ':' + seconds;
+    let formattedTime = twoDigits(hours) + ':' + minutes + ':' + seconds;
 
     if(hours > 12) {
         formattedTime = twoDigits(hours-12) + ':' + minutes + ':' + seconds + " PM";
     }
     else {
-        formattedTime = hours + ':' + minutes + ':' + seconds + " AM";
+        formattedTime = twoDigits(hours) + ':' + minutes + ':' + seconds + " AM";
     }
 
     return formattedTime;
 }
-
-// 각자의 정보를 제공하는 함수들
-export async function current_temp() {
-    const cur_t = jsonData.main.temp;
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase = `The current temperature in ${place}(${country}) is ${cur_t} degrees celcius.`;
-    console.log(phrase);
+async function sunrise() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const sunrise = convertTime(jsonData.sys.sunrise, jsonData.timezone);
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase = `The sun rises at ${sunrise} in ${place}(${country})`;
+        console.log(phrase);
+    })
+    .catch(error => {
+        if(error.response)
+        console.log("Check the name of the city!");
+    });
+}
+async function sunset() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const sunset = convertTime(jsonData.sys.sunset, jsonData.timezone);
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase = `The sun sets at ${sunset} in ${place}(${country})`;
+        console.log(phrase);
+    })
+    .catch(error => {
+        if(error.response)
+        console.log("Check the name of the city!");
+    });
+}
+async function weather_desc() {
+    await axios.get(url)
+    .then(responseData => {
+        let jsonData = responseData.data;
+        const weatherDescription = jsonData.weather[0].description;
+        const place = jsonData.name;
+        const country = jsonData.sys.country;
+        let phrase = `The weather is depicted as ${weatherDescription} in ${place}(${country}) today.`;
+        console.log(phrase);
+    })
+    .catch(error => {
+        if(error.response)
+        console.log("Check the name of the city!");
+    });
 }
 
-export async function min_temp() {
-    const min_t = jsonData.main.temp_min;
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase = `The minimum temperature at the moment in ${place}(${country}) is ${min_t} degrees celcius.`;
-    console.log(phrase);
-}
-export async function max_temp() {
-    const max_t = jsonData.main.temp_max;
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase = `The maximum temperature at the moment in ${place}(${country}) is ${max_t} degrees celcius.`;
-    console.log(phrase);
-}
-export async function humidity() {
-    const humidity = jsonData.main.humidity;
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase;
-    if(humidity > 70) {
-        phrase = `The humidity in ${place}(${country}) is ${humidity}%! It may be an unpleasant day...`;
+async function change_commands(_command, city1) {
+    url = "https://api.openweathermap.org/data/2.5/weather?q="+city1+"&units="+units+"&appid="+apiKey;
+    switch(_command) {
+        case "current_temp":
+            current_temp();
+            break;
+        case "min_temp":
+            min_temp();
+            break;
+        case "max_temp":
+            max_temp();
+            break;
+        case "humidity":
+            humidity();
+            break;
+        case "clouds":
+            clouds();
+            break;
+        case "how_is_the_weather":
+            weather_desc();
+            break;
+        case "sunrise":
+            sunrise();
+            break;
+        case "sunset":
+            sunset();
+            break;
+        default:
+            console.log("Wrong command... ");
+            break;          
     }
-    else {
-        phrase = `The humidity is in ${place}(${country}) ${humidity}%. Have a pleasant day!`;
-    }
-    console.log(phrase);
 }
-export async function clouds() {
-    const cloudy = jsonData.clouds.all;
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase;
-    if(cloudy < 50) {
-        phrase = `The sky is clear with ${cloudy}% cloudiness in ${place}(${country}).`;
-    }
-    else if(cloudy < 80) {
-        phrase = `It is a bit cloudy with ${cloudy}% cloudiness in ${place}(${country}).`;
-    }
-    else { // cloudy >= 80
-        phrase = `It is cloudy with ${cloudy}% cloudiness in ${place}(${country}).`;
-    }
-    console.log(phrase);
-}
-export async function sunrise() {
-    const sunrise = await convertTime(jsonData.sys.sunrise, jsonData.timezone);
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase = `The sun rises at ${sunrise} in ${place}(${country})`;
-    console.log(phrase);
-}
-export async function sunset() {
-    const sunset = await convertTime(jsonData.sys.sunset, jsonData.timezone);
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase = `The sun sets at ${sunset} in ${place}(${country})`;
-    console.log(phrase);
-}
-export async function change_location(new_city) {
-    getWeather(new_city);
-}
-export async function weather_desc() {
-    const weatherDescription = jsonData.weather[0].description;
-    const place = jsonData.name;
-    const country = jsonData.sys.country;
-    let phrase = `The weather is depicted as ${weatherDescription} in ${place}(${country}) today.`;
-    console.log(phrase);
+module.exports = {
+    convertTime,
+    current_temp,
+    min_temp,
+    max_temp,
+    humidity,
+    clouds,
+    sunrise,
+    sunset,
+    weather_desc,
+    change_commands
 }
 
