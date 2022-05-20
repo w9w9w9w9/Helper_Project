@@ -1,0 +1,84 @@
+NAME  
+	Helper – help user to get information regarding translation, weather, and covid-19
+
+SYNOPSIS
+    helper [-category] [option] [...]
+DESCRIPTION
+	Show information on the terminal
+
+    The categories and options are as follows:
+
+	-cv: Provide information about covid -19
+
+		Options:
+            -cr: about confirmed case 
+
+            -dc: about death cases
+
+            -tc: about time when the data was updated
+
+            -pc: about policies related to covid-19
+
+    -w:  Provide information about the weather
+
+        Options:
+            current_temp: shows the current temperature
+            
+            min_temp: shows the minimum temperature at the moment
+            
+            max_temp: shows the maximum temperature at the moment
+            
+            humidity: shows the current humidity
+            
+            clouds: shows the percentage of cloudiness
+            
+            sunrise: shows the time of sunrise
+            
+            sunset: shows the time of sunset
+            
+            change_location: changes the location to which you want the weather information
+            
+            how_is_the_weather: provides a short description of the current weather
+    -t:  Provide translation or language detection
+        Options:
+            -k2e: Translation of Korean into English.
+
+            -e2k: Translation of English into Korean.
+
+            -j2e: Translation of Japanese into English.
+
+            -e2j: Translation of English into Japanese.
+            
+            -j2k: Translation of Japanese into Korean.
+            
+            -k2j: Translation of Korean into Japanese.
+
+            -w:   Detect the language of the input sentence.
+
+EXAMPLE
+    For covid information:
+	
+            helper -cv -cr
+
+	will print current covid confirmed case.
+
+
+    For weather information:
+
+        	helper -w change_location
+
+    will print like this
+
+            > Which city do you want to change to? 
+            > New York
+            > The city is now set to New York!
+              Now, What kind of information would you like to see?(Enter only one) 
+            > current_temp
+            > The current temperature in New York(US) is 12.47 degrees celcius.
+
+    
+    For translation:
+
+            helper -t -k2e 안녕하세요
+
+    will print the translation result. In this example, Hi! will be printed out.
