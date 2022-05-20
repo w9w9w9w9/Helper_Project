@@ -31,7 +31,7 @@ switch(command){
             switch(options){
                 //prints number of Confirmed Case by Covid -19
                 case "-cr":
-                    console.log("Number of Confirmed Case by Covid-19:",$('item').children('decideCnt').text());
+                    console.log(" :",$('item').children('decideCnt').text());
                     break;
                 //prints number of Death Case by Covid -19
                 case "-dc":
