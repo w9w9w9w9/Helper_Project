@@ -1,7 +1,7 @@
 const axios = require('axios')
 // Fetch Weather from API
 
-let apiKey = "dcd483fc5dd0421fddbc501e1661a8cd";
+let apiKey = "";
 let units = "metric";
 let city = "seoul";
 let url = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units="+units+"&appid="+apiKey;
